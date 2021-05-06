@@ -1,4 +1,10 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <%@ page session="false"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +19,7 @@
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 <!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"
-	crossorigin="anonymous"></script>
+	crossorigin="anonymous"></script>\
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="<c:url value='/resources/css/styles.css'/>" rel="stylesheet" />
 </head>
@@ -25,7 +31,7 @@
 	<section class="py-5">
 		<div class="container">
 			<form id="boardForm" method="post">
-			
+			<input type="hidden" id="no" name="no">
 				<!-- Page Heading/Breadcrumbs-->
 				<h1 class="mt-4 mb-3">
 					Board <small>board</small>
@@ -41,7 +47,6 @@
 					</thead>
 					<tbody>
 						<c:forEach var="result" items="${list}" varStatus="status">
-						<input type="hidden" name="no" value="${result.no }">
 							<tr>
 								<th scope="row">${result.no}</th>
 								<td><a href="#" onclick="fn_btn(${result.no});">${result.title}</a></td>
@@ -69,20 +74,13 @@
 function fn_btn(no){
 	//var  formData= $('#boardForm').serialize();
 	alert(no);
-    $.ajax({
-        url : "${pageContext.request.contextPath}/boardDetail.do", 
-        processData: false,
-        contentType: false,
-        type : 'POST', 
-        data : no, 
-        success : function(data) {
-            alert('f');
-        }, // success 
 
-        error : function(xhr, status) {
-            alert(xhr + " : " + status);
-        }
-    }); // $.ajax */
+	$('#boardForm #no').val(no);
+	
+	$('#boardForm').attr({
+		action : '<c:url value="/boardDetail.do" />',
+		target : '_self'
+	}).submit();
 
 }
 </script>

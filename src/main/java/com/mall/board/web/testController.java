@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mall.board.service.boardService;
 
@@ -41,22 +42,31 @@ public class testController {
 		return "about";
 	}
 	
-	@RequestMapping(value = "/board.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/board.do")
 	public String boardList(@RequestParam(defaultValue="1") int currentPageNo, @RequestParam(defaultValue="20") int recordCountPerPage,
 			@RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
-		List<Map<String,Object>> list=boardService.selectBoardList();
-		System.err.println("list");
-		System.err.println(list);
-		model.addAttribute("list",list);
+		
+		try {
+			List<Map<String,Object>> list=boardService.selectBoardList();
+			model.addAttribute("list",list);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	return "board/board";
 	}
 	
-	@RequestMapping(value = "/boardDetail.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/boardDetail.do")
 	public String boardDetail(
 			@RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
-		List<Map<String,Object>> list=boardService.selectBoardList();
-		System.err.println("detaiL@@@@@@@");
-		model.addAttribute("list",list);
+		try {
+			List<Map<String,Object>> list=boardService.selectBoardList();
+			model.addAttribute("list",list);
+			System.err.println("detaiL@@@@@@@");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 	return "board/boardDetail";
 	}
 }
