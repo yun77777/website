@@ -44,7 +44,7 @@ public class testController {
 	@RequestMapping(value = "/board.do", method = RequestMethod.GET)
 	public String boardList(@RequestParam(defaultValue="1") int currentPageNo, @RequestParam(defaultValue="20") int recordCountPerPage,
 			@RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
-		//List<Map<String,Object>> result = boardService.selectBoardList(paramMap);
+//		List<Map<String,Object>> result = boardService.selectBoardList();
 	
 	return "board";
 	}
