@@ -34,7 +34,6 @@ public class boardServiceImpl implements boardService{
 			HttpServletRequest request) throws Exception {
 		System.err.println("askdldsaldasladskld$$$$$$$");
 		System.err.println(paramMap);
-		System.err.println(paramMap.get("no"));
 		boardMapper.insertBoard(paramMap);
 	}
 

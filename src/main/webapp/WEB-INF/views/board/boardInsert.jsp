@@ -45,7 +45,7 @@
 						<div class="control-group form-group">
 							<div class="controls">
 								<label>no:</label> <input class="form-control" id="no"
-									name="no" type="text" value="${detail.no}" required
+									name="no" type="text" value="${detail.no}" disabled
 									data-validation-required-message="Please enter your name." />
 								<p class="help-block"></p>
 							</div>
@@ -90,6 +90,14 @@
 </body>
 
 <script>
+function fn_list(no) {
+	//$('#currentPageNo').val(no);
+
+	$('#boardForm').attr({
+		action : '<c:url value="/board.do"/>',
+		target : '_self'
+	}).submit();
+};
 	function fn_insert() {
 		//var formData = $('#boardForm').serialize();
 		var formData = new FormData($("#boardForm")[0]);
@@ -101,7 +109,8 @@
 			processData : false,
 			contentType : false,
 			success : function(result) {
-				alert('f');
+				alert('success');
+				fn_list();
 			}, // success 
 
 			error : function(xhr, status) {

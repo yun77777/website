@@ -12,11 +12,20 @@
 	</select>
 	<select id="selectBoardDetail" parameterType="map"
 		resultType="map">
-		select * from board
+		select 
+		(SELECT COALESCE(MAX(no),0)+1 FROM board) no
+		,id
+		,title
+		,content
+		,cnt
+		from board
 		where no=#{no,jdbcType=VARCHAR}
 
 	</select>
 	<insert id="insertBoard" parameterType="map">
+		<selectKey resultType="int" keyProperty="no" order="BEFORE">
+		SELECT COALESCE(MAX(no),0)+1 AS no FROM board
+	</selectKey>
 		insert board(
 		no
 		,id
