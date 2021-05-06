@@ -13,7 +13,7 @@ public class boardServiceImpl implements boardService{
 	@Autowired
 	private boardMapper boardMapper;
 	public List<Map<String,Object>> selectBoardList() throws Exception{
-		System.err.println("service@@@@@@@@@");
+		System.err.println("service@@@@@@@@@@");
 		System.err.println("result$$:"+boardMapper.selectBoardList());
 		return null;
 	}
