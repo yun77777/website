@@ -44,8 +44,19 @@ public class testController {
 	@RequestMapping(value = "/board.do", method = RequestMethod.GET)
 	public String boardList(@RequestParam(defaultValue="1") int currentPageNo, @RequestParam(defaultValue="20") int recordCountPerPage,
 			@RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
-//		List<Map<String,Object>> result = boardService.selectBoardList();
+		List<Map<String,Object>> list=boardService.selectBoardList();
+		System.err.println("list");
+		System.err.println(list);
+		model.addAttribute("list",list);
+	return "board/board";
+	}
 	
-	return "board";
+	@RequestMapping(value = "/boardDetail.do", method = RequestMethod.GET)
+	public String boardDetail(
+			@RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
+		List<Map<String,Object>> list=boardService.selectBoardList();
+		System.err.println("detaiL@@@@@@@");
+		model.addAttribute("list",list);
+	return "board/boardDetail";
 	}
 }

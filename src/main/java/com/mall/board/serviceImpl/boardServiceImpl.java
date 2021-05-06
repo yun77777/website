@@ -15,7 +15,8 @@ public class boardServiceImpl implements boardService{
 	public List<Map<String,Object>> selectBoardList() throws Exception{
 		System.err.println("service@@@@@@@@@@");
 		System.err.println("result$$:"+boardMapper.selectBoardList());
-		return null;
+		return boardMapper.selectBoardList();
 	}
 
 }
+ 
