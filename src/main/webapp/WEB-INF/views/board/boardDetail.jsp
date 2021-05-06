@@ -20,38 +20,53 @@
 <body>
 
 	<%@ include file="/WEB-INF/views/common/nav.jsp"%>
-
-	<!-- Page Content-->
-	<section class="py-5">
-		<div class="container">
-			<form id="boardForm" method="post">
-				<!-- Page Heading/Breadcrumbs-->
-				<h1 class="mt-4 mb-3">
-					Board <small>board</small>
-				</h1>
-				<table class="table table-sm">
-					<thead>
-						<tr>
-							<th scope="col">no</th>
-							<th scope="col">title</th>
-							<th scope="col">id</th>
-							<th scope="col">cnt</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="result" items="${list}" varStatus="status">
-							<tr>
-								<th scope="row">${result.no}</th>
-								<td><a href="#" onclick="fn_btn(${result.no});">${result.title}</a></td>
-								<td>${result.id}</td>
-								<td>${result.cnt}</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</form>
-		</div>
-	</section>
+<!-- Page Content-->
+        <section class="py-5">
+            <div class="container">
+                <!-- Page Heading/Breadcrumbs-->
+                <h1>
+                    Board
+                    <small>detail</small>
+                </h1>
+                <!-- Content Row-->
+                <!-- Contact Form-->
+                <!-- In order to set the email address and subject line for the contact form go to the assets/mail/contact_me.php file.-->
+                <div class="row">
+                    <div class="col-lg-8 mb-4">
+                        <form id="contactForm" name="sentMessage" novalidate>
+                            <div class="control-group form-group">
+                                <div class="controls">
+                                    <label>no:</label>
+                                    <input class="form-control" id="name" type="text" value="${detail.no}" required data-validation-required-message="Please enter your name." />
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+                            <div class="control-group form-group">
+                                <div class="controls">
+                                    <label>id:</label>
+                                    <input class="form-control" id="phone" type="tel"  value="${detail.id}" required data-validation-required-message="Please enter your phone number." />
+                                </div>
+                            </div>
+                            <div class="control-group form-group">
+                                <div class="controls">
+                                    <label>title:</label>
+                                    <input class="form-control" id="email" type="email"  value="${detail.title}" required data-validation-required-message="Please enter your email address." />
+                                </div>
+                            </div>
+                            <div class="control-group form-group">
+                                <div class="controls">
+                                    <label>content:</label>
+                                    <textarea class="form-control" id="message" rows="10" cols="100" required data-validation-required-message="Please enter your message" maxlength="999" style="resize: none">${detail.content}</textarea>
+                                </div>
+                            </div>
+                            <div id="success"></div>
+                            <!-- For success/fail messages-->
+                            <button class="btn btn-primary" id="sendMessageButton" type="submit">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
 
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 

@@ -8,7 +8,25 @@
 
 	<select id="selectBoardList" parameterType="java.util.HashMap"
 		resultType="java.util.HashMap">
-select * from board
+		select * from board
 	</select>
+	<select id="selectBoardDetail" parameterType="map"
+		resultType="map">
+		select * from board
+		where no=#{no,jdbcType=VARCHAR}
 
+	</select>
+	<insert id="insertBoard" parameterType="map">
+		insert board(
+		no
+		,id
+		,title
+		,content
+		) values(
+		#{no}
+		,#{id,jdbcType=VARCHAR}
+		,#{title,jdbcType=VARCHAR}
+		,#{content,jdbcType=VARCHAR}
+		)
+	</insert>
 </mapper>

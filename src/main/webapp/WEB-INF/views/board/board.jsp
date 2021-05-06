@@ -36,6 +36,7 @@
 				<h1 class="mt-4 mb-3">
 					Board <small>board</small>
 				</h1>
+				<button type="button" onclick="fn_insert()">insert</button>
 				<table class="table table-sm">
 					<thead>
 						<tr>
@@ -49,7 +50,7 @@
 						<c:forEach var="result" items="${list}" varStatus="status">
 							<tr>
 								<th scope="row">${result.no}</th>
-								<td><a href="#" onclick="fn_btn(${result.no});">${result.title}</a></td>
+								<td><a href="#" onclick="fn_detail(${result.no});">${result.title}</a></td>
 								<td>${result.id}</td>
 								<td>${result.cnt}</td>
 							</tr>
@@ -71,9 +72,16 @@
 </body>
 
 <script>
-function fn_btn(no){
+function fn_insert(){
+	$('#boardForm').attr({
+		action : '<c:url value="/boardInsert.do" />',
+		target : '_self'
+	}).submit();
+
+}
+
+function fn_detail(no){
 	//var  formData= $('#boardForm').serialize();
-	alert(no);
 
 	$('#boardForm #no').val(no);
 	
