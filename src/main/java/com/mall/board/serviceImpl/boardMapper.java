@@ -9,6 +9,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 public interface boardMapper {
 	List<Map<String, Object>> selectBoardList(Map<String, Object> paramMap) throws Exception;
+
+	public Integer selectBoardListCnt(Map<String, Object> paramMap) throws Exception;
+
 	public Map<String, Object> selectBoardDetail(Map<String, Object> paramMap) throws Exception;
+
 	public void insertBoard(Map<String, Object> paramMap) throws Exception;
+
+	void mergeBoard(Map<String, Object> paramMap) throws Exception;
+
 }

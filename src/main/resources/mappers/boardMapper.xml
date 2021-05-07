@@ -2,14 +2,66 @@
 
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
-
-
 <mapper namespace="com.mall.board.serviceImpl.boardMapper">
-
+	<sql id="searchOption">
+		<if test="searchStartDt != ''.toString() and searchStartDt != null and searchEndDt != ''.toString() and searchEndDt != null">
+			AND B.input_dt BETWEEN TO_DATE(#{searchStartDt} || '000000', 'YYYY-MM-DDHH24MISS') AND TO_DATE(#{searchEndDt} || '235959', 'YYYY-MM-DDHH24MISS')
+		</if>
+		<if test="searchTitle != ''.toString() and searchTitle != null">
+			AND B.title LIKE '%' || TRIM(#{searchTitle}) || '%' 
+		</if>
+		<if test="searchId != ''.toString() and searchId != null">
+			AND B.id LIKE '%' || TRIM(#{searchId}) || '%' 
+		</if>
+		
+		<!-- <if test="searchOutingStat != ''.toString() and searchOutingStat != null">
+			AND RRI.OUTING_STAT = #{searchOutingStat} 
+		</if> -->
+		
+		
+		
+		<!-- 개별제출확인 신청 및 진행현황 페이지-->
+		<!-- <if test="PAGE=='status'">
+		AND RRI.OUTING_STAT IN ('RG5401','RG5402','RG5481','RG5403','RG5412','RG5413','RG5482')
+		</if> -->
+		
+		<!-- 개별제출확인 완료 내역 페이지-->
+		<!-- <if test="PAGE=='complete'">
+ 			AND RRI.OUTING_STAT IN ('RG5405')
+		</if> -->
+	</sql>
+	
+	<!-- 게시판 목록 -->
 	<select id="selectBoardList" parameterType="java.util.HashMap"
 		resultType="java.util.HashMap">
-		select * from board
+	<include refid="com.mall.common.commonMapper.pagingHeaderSql"/>
+ 	SELECT B.no
+		,B.id
+		,B.title
+		,B.content
+		,B.cnt
+		,B.input_dt
+		FROM board B
+		where B.no>0
+		<include refid="searchOption"/>
+		ORDER BY B.no DESC
+	<include refid="com.mall.common.commonMapper.pagingFooterSql"/>
 	</select>
+	
+	<select id="selectBoardListCnt" parameterType="map"
+		resultType="Integer">
+			SELECT COUNT(1) CNT
+		FROM (
+			SELECT B.no
+			,B.input_dt
+		
+		FROM board B
+		WHERE B.no>0
+		<include refid="searchOption"/>
+		) B
+	</select>
+	
+	
 	<select id="selectBoardDetail" parameterType="map"
 		resultType="map">
 		select 
@@ -18,12 +70,14 @@
 		,title
 		,content
 		,cnt
+		,input_dt
+		,updt_dt
 		from board
 		where no=#{no,jdbcType=VARCHAR}
 
 	</select>
 	<insert id="insertBoard" parameterType="map">
-		<selectKey resultType="int" keyProperty="no" order="BEFORE">
+	<selectKey resultType="int" keyProperty="no" order="BEFORE">
 		SELECT COALESCE(MAX(no),0)+1 AS no FROM board
 	</selectKey>
 		insert board(
@@ -31,11 +85,42 @@
 		,id
 		,title
 		,content
+		,input_dt
 		) values(
 		#{no}
 		,#{id,jdbcType=VARCHAR}
 		,#{title,jdbcType=VARCHAR}
 		,#{content,jdbcType=VARCHAR}
+		,NOW()
 		)
 	</insert>
+	
+	
+	<update id="mergeBoard" parameterType="map">
+	MERGE INTO 	board B
+	USING DUAL
+		   ON (
+	              B.no    = #{no}
+		      )
+	WHEN MATCHED THEN <!-- 데이터 있을 떄 -->
+         UPDATE SET 
+   		id = #{id, jdbcType=VARCHAR}
+		, title = #{title, jdbcType=VARCHAR}
+		, content = #{content, jdbcType=VARCHAR}
+		, updt_dt = NOW()
+	 WHEN NOT MATCHED THEN <!-- 데이터 없을 때 -->
+	   	  INSERT (
+	   	  no
+			,id
+			,tilte
+			,content
+			,updt_dt
+		) VALUES(
+			#{no, jdbcType=VARCHAR}
+			, #{id, jdbcType=VARCHAR}
+			, #{title, jdbcType=VARCHAR}
+			, #{content, jdbcType=VARCHAR}
+			, NOW()
+		) 		
+	</update>
 </mapper>

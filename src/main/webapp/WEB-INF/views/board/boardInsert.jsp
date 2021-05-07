@@ -5,7 +5,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-
 <%@ page session="false"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +74,10 @@
 						</div>
 						<div id="success"></div>
 						<!-- For success/fail messages-->
+                        <button class="btn btn-primary" id="sendMessageButton" onclick="fn_list()" type="button">Go to the list</button>
 						<button class="btn btn-primary" onclick="fn_insert()" type="button">submit</button>
+					</div>
+				</div>
 			</form>
 		</div>
 	</section>
@@ -94,31 +96,32 @@ function fn_list(no) {
 	//$('#currentPageNo').val(no);
 
 	$('#boardForm').attr({
-		action : '<c:url value="/board.do"/>',
+		action : '<c:url value="/boardList.do"/>',
 		target : '_self'
 	}).submit();
 };
-	function fn_insert() {
-		//var formData = $('#boardForm').serialize();
-		var formData = new FormData($("#boardForm")[0]);
-		$.ajax({
-			url : "${pageContext.request.contextPath}/insertBoard.do",
-			type : "post",
-			enctype: 'multipart/form-data',
-			data : formData,
-			processData : false,
-			contentType : false,
-			success : function(result) {
-				alert('success');
-				fn_list();
-			}, // success 
 
-			error : function(xhr, status) {
-				alert(xhr + " : " + status);
-			}
-		});
+function fn_insert() {
+	//var formData = $('#boardForm').serialize();
+	var formData = new FormData($("#boardForm")[0]);
+	$.ajax({
+		url : "${pageContext.request.contextPath}/insertBoard.do",
+		type : "post",
+		enctype: 'multipart/form-data',
+		data : formData,
+		processData : false,
+		contentType : false,
+		success : function(result) {
+			//alert('success');
+			fn_list();
+		}, // success 
 
-	}
+		error : function(xhr, status) {
+			alert(xhr + " : " + status);
+		}
+	});
+
+}
 </script>
 
 </html>

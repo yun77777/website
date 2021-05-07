@@ -1,4 +1,10 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <%@ page session="false"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +20,7 @@
 <!-- Font Awesome icons (free version)-->
 <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"
 	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="<c:url value='/resources/css/styles.css'/>" rel="stylesheet" />
 </head>
@@ -33,7 +40,8 @@
                 <!-- In order to set the email address and subject line for the contact form go to the assets/mail/contact_me.php file.-->
                 <div class="row">
                     <div class="col-lg-8 mb-4">
-                        <form id="contactForm" name="sentMessage" novalidate>
+                        <form id="detailForm" name="sentMessage" novalidate>
+                        	<input type="hidden" id="currentPageNo" name="currentPageNo" value="1"/>
                             <div class="control-group form-group">
                                 <div class="controls">
                                     <label>no:</label>
@@ -60,8 +68,11 @@
                                 </div>
                             </div>
                             <div id="success"></div>
+                            
                             <!-- For success/fail messages-->
-                            <button class="btn btn-primary" id="sendMessageButton" type="submit">Send Message</button>
+                        	<button class="btn btn-primary" id="sendMessageButton" onclick="fn_list()" type="button">Go to the list</button>
+                        	<button class="btn btn-primary" id="sendMessageButton" onclick="fn_insert()" type="button">Save</button>
+			                <button class="btn btn-primary" id="sendMessageButton" onclick="fn_delete()" type="button">Delete</button>
                         </form>
                     </div>
                 </div>
@@ -71,14 +82,23 @@
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 
 	<!-- Bootstrap core JS-->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script
+<!-- 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+ -->	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Core theme JS-->
 	<script src="<c:url value='/resources/js/scripts.js'/>"></script>
 </body>
 
 <script>
+function fn_list(no) {
+	//$('#currentPageNo').val(no);
+
+	$('#boardForm').attr({
+		action : '<c:url value="/boardList.do"/>',
+		target : '_self'
+	}).submit();
+};
+
 function fn_btn(no){
 	var  formData= $('#boardForm').serialize();
     $.ajax({
@@ -87,13 +107,34 @@ function fn_btn(no){
         type : 'POST', 
         data : formData, 
         success : function(data) {
-            alert('f');
         }, // success 
 
         error : function(xhr, status) {
             alert(xhr + " : " + status);
         }
     }); // $.ajax */
+
+}
+
+function fn_insert() {
+	//var formData = $('#boardForm').serialize();
+	var formData = new FormData($("#boardForm")[0]);
+	$.ajax({
+		url : "${pageContext.request.contextPath}/insertBoard.do",
+		type : "post",
+		enctype: 'multipart/form-data',
+		data : formData,
+		processData : false,
+		contentType : false,
+		success : function(result) {
+			//alert('success');
+			fn_list();
+		}, // success 
+
+		error : function(xhr, status) {
+			alert(xhr + " : " + status);
+		}
+	});
 
 }
 </script>

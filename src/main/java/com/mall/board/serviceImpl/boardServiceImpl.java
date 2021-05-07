@@ -20,7 +20,13 @@ public class boardServiceImpl implements boardService{
 	public List<Map<String,Object>> selectBoardList(Map<String, Object> paramMap) throws Exception{
 		System.err.println("service@@@@@@@@@@");
 		System.err.println("result$$:"+boardMapper.selectBoardList(paramMap));
+		System.err.println(paramMap);
 		return boardMapper.selectBoardList(paramMap);
+	}
+	
+	public Integer selectBoardListCnt(Map<String, Object> paramMap) throws Exception{
+		System.err.println("dd");
+		return boardMapper.selectBoardListCnt(paramMap);
 	}
 	
 	@Override
@@ -34,7 +40,8 @@ public class boardServiceImpl implements boardService{
 			HttpServletRequest request) throws Exception {
 		System.err.println("askdldsaldasladskld$$$$$$$");
 		System.err.println(paramMap);
-		boardMapper.insertBoard(paramMap);
+		boardMapper.mergeBoard(paramMap);
+//		boardMapper.insertBoard(paramMap);
 	}
 
 }

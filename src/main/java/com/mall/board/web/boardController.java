@@ -2,9 +2,11 @@ package com.mall.board.web;
 
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.HashMap;import java.util.List;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import com.mall.common.PaginationVO;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mall.board.service.boardService;
+
 
 
 @Controller
@@ -44,19 +47,33 @@ public class boardController {
 		return "about";
 	}
 	
-	@RequestMapping(value = "/board.do")
-	public String boardList(@RequestParam(defaultValue="1") int currentPageNo, @RequestParam(defaultValue="20") int recordCountPerPage,
+	@RequestMapping(value = "/boardList.do")
+	public String boardList(@RequestParam(defaultValue="1") int currentPageNo, @RequestParam(defaultValue="5") int recordCountPerPage,
 			@RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
+		System.err.println("searchList@@@");
+		System.err.println(paramMap);
+		
+		paramMap.put("recordCountPerPage", recordCountPerPage);
+		paramMap.put("currentPageNo", currentPageNo);
 		
 		try {
+			PaginationVO pg = new PaginationVO(currentPageNo, recordCountPerPage, 3, 
+					boardService.selectBoardListCnt(paramMap));
+			
+			paramMap.put("length",recordCountPerPage);
+			paramMap.put("start",pg.getFirstRecordIndex()-1);
+			
 			List<Map<String,Object>> list=boardService.selectBoardList(paramMap);
+			
 			model.addAttribute("list",list);
+			model.addAttribute("paramMap",paramMap);
+			model.addAttribute("pg",pg);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-	return "board/board";
+	return "board/boardList";
 	}
 	
 	@RequestMapping(value = "/boardDetail.do")
