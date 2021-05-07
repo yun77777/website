@@ -93,6 +93,20 @@ public class boardController {
 	public String boardInsert(
 			@RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
 		try {
+			paramMap.put("no",boardService.selectBoardListCnt(paramMap)+1);
+			int no;
+			if(request.getAttribute("no")!=null)
+				no=boardService.selectBoardListCnt(paramMap)+1;
+			else
+				no=	(Integer) request.getAttribute("no");
+
+//			no=(Integer) paramMap.get("nod");
+			
+			
+			System.err.println("no$$$$$$$$");
+			System.err.println(no);
+			System.err.println(paramMap);
+			paramMap.put("no",no);
 			Map<String,Object> detail=boardService.selectBoardDetail(paramMap);
 			model.addAttribute("detail",detail);
 			System.err.println("boardInsert@@@@@@@");
@@ -110,6 +124,20 @@ public class boardController {
 		System.err.println(paramMap);
 
 		try {
+			paramMap.put("no",boardService.selectBoardListCnt(paramMap)+1);
+			int no;
+			if(request.getAttribute("no")!=null)
+				no=boardService.selectBoardListCnt(paramMap)+1;
+			else
+				no=	(Integer) request.getAttribute("no");
+
+//			no=(Integer) paramMap.get("nod");
+			
+			
+			System.err.println("no$$$$$$$$");
+			System.err.println(no);
+			System.err.println(paramMap);
+			paramMap.put("no",no);
 			boardService.insertBoard(paramMap, multi, request);
 			model.addAttribute("paramMap", paramMap);
 		} catch (Exception e) {

@@ -111,7 +111,8 @@
 			, NOW()
 		)
 		ON DUPLICATE KEY UPDATE
-		id = #{id, jdbcType=VARCHAR}
+		no = #{no, jdbcType=VARCHAR}
+		, id = #{id, jdbcType=VARCHAR}
 		, TITLE = #{title, jdbcType=VARCHAR}
 		, content = #{content, jdbcType=VARCHAR}
 		, updt_dt = NOW()

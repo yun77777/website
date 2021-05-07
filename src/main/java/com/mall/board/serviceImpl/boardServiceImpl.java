@@ -38,16 +38,19 @@ public class boardServiceImpl implements boardService{
 	@Override
 	public void insertBoard(Map<String, Object> paramMap, MultipartHttpServletRequest multi,
 			HttpServletRequest request) throws Exception {
-		int no;
-		if(boardMapper.selectBoardListCnt(paramMap)!=null)
-			no=boardMapper.selectBoardListCnt(paramMap)+1;
-		else
-			no=(Integer) paramMap.get("no");
-		
-		System.err.println("no$$$$$$$$");
-		System.err.println(no);
-		System.err.println(paramMap);
-		paramMap.put("no",no);
+//		int no;
+//		if(request.getAttribute("no")!=null)
+//			no=boardMapper.selectBoardListCnt(paramMap)+1;
+//		else
+//			no=	(Integer) request.getAttribute("no");
+//
+////		no=(Integer) paramMap.get("nod");
+//		
+//		
+//		System.err.println("no$$$$$$$$");
+//		System.err.println(no);
+//		System.err.println(paramMap);
+//		paramMap.put("no",no);
 		boardMapper.mergeBoard(paramMap);
 //		boardMapper.insertBoard(paramMap);
 	}
