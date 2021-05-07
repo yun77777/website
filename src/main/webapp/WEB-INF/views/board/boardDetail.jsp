@@ -40,31 +40,31 @@
                 <!-- In order to set the email address and subject line for the contact form go to the assets/mail/contact_me.php file.-->
                 <div class="row">
                     <div class="col-lg-8 mb-4">
-                        <form id="detailForm" name="sentMessage" novalidate>
+                        <form id="boardForm" name="sentMessage" novalidate>
                         	<input type="hidden" id="currentPageNo" name="currentPageNo" value="1"/>
                             <div class="control-group form-group">
                                 <div class="controls">
                                     <label>no:</label>
-                                    <input class="form-control" id="name" type="text" value="${detail.no}" required data-validation-required-message="Please enter your name." />
+                                    <input class="form-control" id="no" name="no" type="text" value="${detail.no}" disabled data-validation-required-message="Please enter your name." />
                                     <p class="help-block"></p>
                                 </div>
                             </div>
                             <div class="control-group form-group">
                                 <div class="controls">
                                     <label>id:</label>
-                                    <input class="form-control" id="phone" type="tel"  value="${detail.id}" required data-validation-required-message="Please enter your phone number." />
+                                    <input class="form-control" id="id" name="id" type="tel"  value="${detail.id}" required data-validation-required-message="Please enter your phone number." />
                                 </div>
                             </div>
                             <div class="control-group form-group">
                                 <div class="controls">
                                     <label>title:</label>
-                                    <input class="form-control" id="email" type="email"  value="${detail.title}" required data-validation-required-message="Please enter your email address." />
+                                    <input class="form-control" id="title" name="title" type="email"  value="${detail.title}" required data-validation-required-message="Please enter your email address." />
                                 </div>
                             </div>
                             <div class="control-group form-group">
                                 <div class="controls">
                                     <label>content:</label>
-                                    <textarea class="form-control" id="message" rows="10" cols="100" required data-validation-required-message="Please enter your message" maxlength="999" style="resize: none">${detail.content}</textarea>
+                                    <textarea class="form-control" id="content" name="content" rows="10" cols="100" required data-validation-required-message="Please enter your message" maxlength="999" style="resize: none">${detail.content}</textarea>
                                 </div>
                             </div>
                             <div id="success"></div>
@@ -127,7 +127,7 @@ function fn_insert() {
 		processData : false,
 		contentType : false,
 		success : function(result) {
-			//alert('success');
+			alert('success');
 			fn_list();
 		}, // success 
 

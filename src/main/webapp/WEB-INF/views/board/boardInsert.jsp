@@ -112,7 +112,7 @@ function fn_insert() {
 		processData : false,
 		contentType : false,
 		success : function(result) {
-			//alert('success');
+			alert('success');
 			fn_list();
 		}, // success 
 

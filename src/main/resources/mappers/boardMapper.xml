@@ -97,22 +97,10 @@
 	
 	
 	<update id="mergeBoard" parameterType="map">
-	MERGE INTO 	board B
-	USING DUAL
-		   ON (
-	              B.no    = #{no}
-		      )
-	WHEN MATCHED THEN <!-- 데이터 있을 떄 -->
-         UPDATE SET 
-   		id = #{id, jdbcType=VARCHAR}
-		, title = #{title, jdbcType=VARCHAR}
-		, content = #{content, jdbcType=VARCHAR}
-		, updt_dt = NOW()
-	 WHEN NOT MATCHED THEN <!-- 데이터 없을 때 -->
-	   	  INSERT (
+   	  INSERT INTO board(
 	   	  no
 			,id
-			,tilte
+			,TITLE
 			,content
 			,updt_dt
 		) VALUES(
@@ -121,6 +109,11 @@
 			, #{title, jdbcType=VARCHAR}
 			, #{content, jdbcType=VARCHAR}
 			, NOW()
-		) 		
+		)
+		ON DUPLICATE KEY UPDATE
+		id = #{id, jdbcType=VARCHAR}
+		, TITLE = #{title, jdbcType=VARCHAR}
+		, content = #{content, jdbcType=VARCHAR}
+		, updt_dt = NOW()
 	</update>
 </mapper>
