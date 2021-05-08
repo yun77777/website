@@ -64,6 +64,10 @@
 		) B
 	</select>
 	
+	<select id="selectBoardMaxNo" parameterType="map"
+		resultType="Integer">
+			SELECT max(no) FROM board
+	</select>
 	
 	<select id="selectBoardDetail" parameterType="map"
 		resultType="map">
@@ -128,4 +132,37 @@
 		, content = #{content, jdbcType=VARCHAR}
 		, updt_dt = NOW()
 	</update>
+	
+	<update id="deleteBoard" parameterType="map">
+   	  delete from board where no=#{no,jdbcType=VARCHAR}
+	</update>
+	
+	
+	<!-- history -->
+	<insert id="insertHisBoard" parameterType="map">
+	<selectKey resultType="int" keyProperty="HIS_ID" order="BEFORE">
+		SELECT COALESCE(MAX(HIS_ID),0)+1 AS HIS_ID FROM board_h
+		where no=#{no, jdbcType=VARCHAR}
+	</selectKey>
+		insert into board_h(
+		HIS_ID
+		,no
+		,id
+		,title
+		,content
+		,input_dt
+		,updt_dt
+		,cnt
+		)
+		select
+		#{HIS_ID,jdbcType=VARCHAR}
+		,no
+		,id
+		,title
+		,content
+		,input_dt
+		,updt_dt
+		,cnt
+		from board where no=#{no, jdbcType=VARCHAR}
+	</insert>
 </mapper>

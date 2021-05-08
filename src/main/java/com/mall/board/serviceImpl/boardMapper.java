@@ -12,12 +12,19 @@ public interface boardMapper {
 
 	public Integer selectBoardListCnt(Map<String, Object> paramMap) throws Exception;
 
+	public Integer selectBoardMaxNo(Map<String, Object> paramMap) throws Exception;
+
 	public Map<String, Object> selectBoardDetail(Map<String, Object> paramMap) throws Exception;
 
 	public void insertBoard(Map<String, Object> paramMap) throws Exception;
 
+	public void deleteBoard(Map<String, Object> paramMap) throws Exception;
+
 	public void updateCnt(Map<String, Object> paramMap) throws Exception;
 
 	void mergeBoard(Map<String, Object> paramMap) throws Exception;
+
+	// history
+	public void insertHisBoard(Map<String, Object> paramMap) throws Exception;
 
 }

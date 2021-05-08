@@ -77,6 +77,15 @@
 									data-validation-required-message="Please enter your phone number." />
 							</div>
 						</div>
+						<!-- <div class="card mb-4">
+                            <h5 class="card-header">Search</h5>
+                            <div class="card-body">
+                                <div class="input-group">
+                                    <input class="form-control" type="text" placeholder="Search for..." />
+                                    <span class="inpug-group-append"><button class="btn btn-secondary" type="button">Go!</button></span>
+                                </div>
+                            </div>
+                        </div> -->
 						<div id="success"></div>
 						<!-- //search-->
 						<button class="btn btn-primary" onclick="fn_list('1')" type="button">Search</button>

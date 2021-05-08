@@ -39,6 +39,7 @@
                 <!-- Contact Form-->
                 <!-- In order to set the email address and subject line for the contact form go to the assets/mail/contact_me.php file.-->
                 <div class="row">
+                	<button class="btn btn-primary" id="sendMessageButton" onclick="fn_list()" type="button">Go to the list</button>
                     <div class="col-lg-8 mb-4">
                         <form id="boardForm" name="sentMessage" novalidate>
                         	<input type="hidden" id="currentPageNo" name="currentPageNo" value="1"/>
@@ -70,9 +71,23 @@
                             <div id="success"></div>
                             
                             <!-- For success/fail messages-->
-                        	<button class="btn btn-primary" id="sendMessageButton" onclick="fn_list()" type="button">Go to the list</button>
                         	<button class="btn btn-primary" id="sendMessageButton" onclick="fn_insert()" type="button">Save</button>
 			                <button class="btn btn-primary" id="sendMessageButton" onclick="fn_delete()" type="button">Delete</button>
+			                
+			                <table class="table table-sm">
+								<tbody>
+									<c:forEach var="result" items="${list}" varStatus="status">
+										<tr>
+											<th scope="row">before</th>
+											<td><a href="#" onclick="fn_detail(${result.no});">${result.title}</a></td>
+										</tr>
+										<tr>
+											<th scope="row">after</th>
+											<td><a href="#" onclick="fn_detail(${result.no});">${result.title}</a></td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
                         </form>
                     </div>
                 </div>
@@ -136,7 +151,28 @@ function fn_insert() {
 			alert(xhr + " : " + status);
 		}
 	});
+}
 
+function fn_delete() {
+	//var formData = $('#boardForm').serialize();
+	$('#boardForm #no').attr('disabled',false);
+	var formData = new FormData($("#boardForm")[0]);
+	$.ajax({
+		url : "${pageContext.request.contextPath}/deleteBoard.do",
+		type : "post",
+		enctype: 'multipart/form-data',
+		data : formData,
+		processData : false,
+		contentType : false,
+		success : function(result) {
+			alert('success');
+			fn_list();
+		}, // success 
+
+		error : function(xhr, status) {
+			alert(xhr + " : " + status);
+		}
+	});
 }
 </script>
 

@@ -18,21 +18,19 @@ public class boardServiceImpl implements boardService{
 	
 	@Override
 	public List<Map<String,Object>> selectBoardList(Map<String, Object> paramMap) throws Exception{
-		System.err.println("service@@@@@@@@@@");
-		System.err.println("result$$:"+boardMapper.selectBoardList(paramMap));
-		System.err.println(paramMap);
 		return boardMapper.selectBoardList(paramMap);
 	}
 	
 	public Integer selectBoardListCnt(Map<String, Object> paramMap) throws Exception{
-		System.err.println("dd");
 		return boardMapper.selectBoardListCnt(paramMap);
+	}
+	
+	public Integer selectBoardMaxNo(Map<String, Object> paramMap) throws Exception{
+		return boardMapper.selectBoardMaxNo(paramMap);
 	}
 	
 	@Override
 	public Map<String,Object> selectBoardDetail(Map<String, Object> paramMap) throws Exception{
-		System.err.println("service@@@@@@@@@@");
-		System.err.println("result$$:"+boardMapper.selectBoardDetail(paramMap));
 		boardMapper.updateCnt(paramMap);
 		return boardMapper.selectBoardDetail(paramMap);
 	}
@@ -40,21 +38,14 @@ public class boardServiceImpl implements boardService{
 	@Override
 	public void insertBoard(Map<String, Object> paramMap, MultipartHttpServletRequest multi,
 			HttpServletRequest request) throws Exception {
-//		int no;
-//		if(request.getAttribute("no")!=null)
-//			no=boardMapper.selectBoardListCnt(paramMap)+1;
-//		else
-//			no=	(Integer) request.getAttribute("no");
-//
-////		no=(Integer) paramMap.get("nod");
-//		
-//		
-//		System.err.println("no$$$$$$$$");
-//		System.err.println(no);
-//		System.err.println(paramMap);
-//		paramMap.put("no",no);
 		boardMapper.mergeBoard(paramMap);
-//		boardMapper.insertBoard(paramMap);
+		boardMapper.insertHisBoard(paramMap);
+	}
+	
+	@Override
+	public void deleteBoard(Map<String, Object> paramMap, MultipartHttpServletRequest multi,
+			HttpServletRequest request) throws Exception {
+		boardMapper.deleteBoard(paramMap);
 	}
 
 }

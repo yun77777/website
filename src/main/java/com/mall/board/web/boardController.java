@@ -93,9 +93,7 @@ public class boardController {
 	public String boardInsert(
 			@RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
 		try {
-			paramMap.put("no",boardService.selectBoardListCnt(paramMap)+1);
-			System.err.println("no:"+paramMap.get("no"));
-			System.err.println("boardInsert@@@@@@@");
+			paramMap.put("no",boardService.selectBoardMaxNo(paramMap)+1);
 			model.addAttribute("paramMap",paramMap);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -107,13 +105,25 @@ public class boardController {
 	@RequestMapping(value = "/insertBoard.do")
 	public Map<String,Object> insertBoard(
 			MultipartHttpServletRequest multi, @RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
-		System.err.println("insertBoard$$$$$$$");
-		System.err.println(paramMap);
 		
 		try {
 			if(paramMap.get("no").toString()!=null||!paramMap.get("no").toString().trim().equals(""))
 				paramMap.put("no",paramMap.get("no"));
 			boardService.insertBoard(paramMap, multi, request);
+			model.addAttribute("paramMap", paramMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		return paramMap;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/deleteBoard.do")
+	public Map<String,Object> deleteBoard(
+			MultipartHttpServletRequest multi, @RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
+		
+		try {
+			boardService.deleteBoard(paramMap, multi, request);
 			model.addAttribute("paramMap", paramMap);
 		} catch (Exception e) {
 			e.printStackTrace();
