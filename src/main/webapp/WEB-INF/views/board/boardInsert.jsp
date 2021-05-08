@@ -44,7 +44,7 @@
 						<div class="control-group form-group">
 							<div class="controls">
 								<label>no:</label> <input class="form-control" id="no"
-									name="no" type="text" value="${detail.no}" disabled
+									name="no" type="text" value="${paramMap.no}" disabled
 									data-validation-required-message="Please enter your name." />
 								<p class="help-block"></p>
 							</div>
@@ -103,7 +103,9 @@ function fn_list(no) {
 
 function fn_insert() {
 	//var formData = $('#boardForm').serialize();
+	$('#boardForm #no').attr('disabled',false);
 	var formData = new FormData($("#boardForm")[0]);
+	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/insertBoard.do",
 		type : "post",

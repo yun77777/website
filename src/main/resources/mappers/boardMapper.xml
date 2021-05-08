@@ -65,7 +65,8 @@
 	<select id="selectBoardDetail" parameterType="map"
 		resultType="map">
 		select 
-		(SELECT COALESCE(MAX(no),0)+1 FROM board) no
+		<!-- (SELECT COALESCE(MAX(no),0)+1 FROM board) no -->
+		no
 		,id
 		,title
 		,content

@@ -94,22 +94,9 @@ public class boardController {
 			@RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
 		try {
 			paramMap.put("no",boardService.selectBoardListCnt(paramMap)+1);
-			int no;
-			if(request.getAttribute("no")!=null)
-				no=boardService.selectBoardListCnt(paramMap)+1;
-			else
-				no=	(Integer) request.getAttribute("no");
-
-//			no=(Integer) paramMap.get("nod");
-			
-			
-			System.err.println("no$$$$$$$$");
-			System.err.println(no);
-			System.err.println(paramMap);
-			paramMap.put("no",no);
-			Map<String,Object> detail=boardService.selectBoardDetail(paramMap);
-			model.addAttribute("detail",detail);
+			System.err.println("no:"+paramMap.get("no"));
 			System.err.println("boardInsert@@@@@@@");
+			model.addAttribute("paramMap",paramMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
@@ -122,22 +109,10 @@ public class boardController {
 			MultipartHttpServletRequest multi, @RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
 		System.err.println("insertBoard$$$$$$$");
 		System.err.println(paramMap);
-
+		
 		try {
-			paramMap.put("no",boardService.selectBoardListCnt(paramMap)+1);
-			int no;
-			if(request.getAttribute("no")!=null)
-				no=boardService.selectBoardListCnt(paramMap)+1;
-			else
-				no=	(Integer) request.getAttribute("no");
-
-//			no=(Integer) paramMap.get("nod");
-			
-			
-			System.err.println("no$$$$$$$$");
-			System.err.println(no);
-			System.err.println(paramMap);
-			paramMap.put("no",no);
+			if(paramMap.get("no").toString()!=null||!paramMap.get("no").toString().trim().equals(""))
+				paramMap.put("no",paramMap.get("no"));
 			boardService.insertBoard(paramMap, multi, request);
 			model.addAttribute("paramMap", paramMap);
 		} catch (Exception e) {

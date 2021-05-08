@@ -118,6 +118,7 @@ function fn_btn(no){
 
 function fn_insert() {
 	//var formData = $('#boardForm').serialize();
+	$('#boardForm #no').attr('disabled',false);
 	var formData = new FormData($("#boardForm")[0]);
 	$.ajax({
 		url : "${pageContext.request.contextPath}/insertBoard.do",
