@@ -79,7 +79,7 @@
 						</div>
 						<div id="success"></div>
 						<!-- //search-->
-						<button class="btn btn-primary" onclick="fn_list()" type="button">Search</button>
+						<button class="btn btn-primary" onclick="fn_list('1')" type="button">Search</button>
 						<br><br>
 						<button class="btn btn-primary" onclick="fn_insert()" type="button">Insert</button>
 					</div>
@@ -92,6 +92,7 @@
 							<th scope="col">no</th>
 							<th scope="col">title</th>
 							<th scope="col">id</th>
+							<th scope="col">input_dt</th>
 							<th scope="col">cnt</th>
 						</tr>
 					</thead>
@@ -101,6 +102,7 @@
 								<th scope="row">${result.no}</th>
 								<td><a href="#" onclick="fn_detail(${result.no});">${result.title}</a></td>
 								<td>${result.id}</td>
+								<td>${result.input_dt}</td>
 								<td>${result.cnt}</td>
 							</tr>
 						</c:forEach>
