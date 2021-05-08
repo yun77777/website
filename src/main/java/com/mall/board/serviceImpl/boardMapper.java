@@ -16,6 +16,8 @@ public interface boardMapper {
 
 	public void insertBoard(Map<String, Object> paramMap) throws Exception;
 
+	public void updateCnt(Map<String, Object> paramMap) throws Exception;
+
 	void mergeBoard(Map<String, Object> paramMap) throws Exception;
 
 }

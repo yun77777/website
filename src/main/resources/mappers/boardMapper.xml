@@ -4,14 +4,15 @@
 
 <mapper namespace="com.mall.board.serviceImpl.boardMapper">
 	<sql id="searchOption">
-		<if test="searchStartDt != ''.toString() and searchStartDt != null and searchEndDt != ''.toString() and searchEndDt != null">
-			AND B.input_dt BETWEEN TO_DATE(#{searchStartDt} || '000000', 'YYYY-MM-DDHH24MISS') AND TO_DATE(#{searchEndDt} || '235959', 'YYYY-MM-DDHH24MISS')
+		<if test="searchStartDate != ''.toString() and searchStartDate != null and searchEndDate != ''.toString() and searchEndDate != null">
+		AND date_format(B.input_dt,'%Y-%m-%d') BETWEEN #{searchStartDate} AND #{searchEndDate}
+		
 		</if>
 		<if test="searchTitle != ''.toString() and searchTitle != null">
-			AND B.title LIKE '%' || TRIM(#{searchTitle}) || '%' 
+			AND B.title LIKE CONCAT('%',TRIM(#{searchTitle}),'%')
 		</if>
 		<if test="searchId != ''.toString() and searchId != null">
-			AND B.id LIKE '%' || TRIM(#{searchId}) || '%' 
+			AND B.title LIKE CONCAT('%',TRIM(#{searchId}),'%')
 		</if>
 		
 		<!-- <if test="searchOutingStat != ''.toString() and searchOutingStat != null">
@@ -42,7 +43,7 @@
 		,B.cnt
 		<!-- ,(SELECT date_format(input_dt,'%Y-%m-%d') FROM board WHERE no=B.no) input_dt
 		,(SELECT date_format(input_dt,'%H:%m:%s') FROM board WHERE no=B.no) input_h -->
-        ,IF(date_format(NOW(),'%Y-%m-%d')=date_format(input_dt,'%Y-%m-%d'),(SELECT date_format(input_dt,'%H:%m:%s') FROM board WHERE no=B.no),(SELECT date_format(input_dt,'%Y-%m-%d') FROM webTest.board WHERE no=32)) input_dt
+        ,IF(date_format(NOW(),'%Y-%m-%d')=date_format(input_dt,'%Y-%m-%d'),(SELECT date_format(input_dt,'%H:%m:%s') FROM board WHERE no=B.no),(SELECT date_format(input_dt,'%Y-%m-%d') FROM board WHERE no=B.no)) input_dt
 		FROM board B
 		where B.no>0
 		<include refid="searchOption"/>
@@ -79,6 +80,13 @@
 		where no=#{no,jdbcType=VARCHAR}
 
 	</select>
+	
+	<update id="updateCnt" parameterType="map">
+		update board
+		set cnt = cnt+1
+		where no=#{no,jdbcType=VARCHAR}
+	</update>
+	
 	<insert id="insertBoard" parameterType="map">
 	<selectKey resultType="int" keyProperty="no" order="BEFORE">
 		SELECT COALESCE(MAX(no),0)+1 AS no FROM board

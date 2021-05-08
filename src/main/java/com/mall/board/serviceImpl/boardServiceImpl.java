@@ -33,8 +33,10 @@ public class boardServiceImpl implements boardService{
 	public Map<String,Object> selectBoardDetail(Map<String, Object> paramMap) throws Exception{
 		System.err.println("service@@@@@@@@@@");
 		System.err.println("result$$:"+boardMapper.selectBoardDetail(paramMap));
+		boardMapper.updateCnt(paramMap);
 		return boardMapper.selectBoardDetail(paramMap);
 	}
+	
 	@Override
 	public void insertBoard(Map<String, Object> paramMap, MultipartHttpServletRequest multi,
 			HttpServletRequest request) throws Exception {
