@@ -21,6 +21,11 @@ public class boardServiceImpl implements boardService{
 		return boardMapper.selectBoardList(paramMap);
 	}
 	
+	@Override
+	public Map<String,Object> selectContent(Map<String, Object> paramMap) throws Exception{
+		return boardMapper.selectContent(paramMap);
+	}
+	
 	public Integer selectBoardListCnt(Map<String, Object> paramMap) throws Exception{
 		return boardMapper.selectBoardListCnt(paramMap);
 	}

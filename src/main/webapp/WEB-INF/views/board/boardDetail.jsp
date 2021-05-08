@@ -76,16 +76,14 @@
 			                
 			                <table class="table table-sm">
 								<tbody>
-									<c:forEach var="result" items="${list}" varStatus="status">
-										<tr>
-											<th scope="row">before</th>
-											<td><a href="#" onclick="fn_detail(${result.no});">${result.title}</a></td>
-										</tr>
-										<tr>
-											<th scope="row">after</th>
-											<td><a href="#" onclick="fn_detail(${result.no});">${result.title}</a></td>
-										</tr>
-									</c:forEach>
+									<tr>
+										<th scope="row">before</th>
+										<td><a href="#" onclick="fn_detail(${beforeContent.no});">${beforeContent.TITLE}</a></td>
+									</tr>
+									<tr>
+										<th scope="row">after</th>
+										<td><a href="#" onclick="fn_detail(${afterContent.no});">${afterContent.TITLE}</a></td>
+									</tr>
 								</tbody>
 							</table>
                         </form>
@@ -112,7 +110,19 @@ function fn_list(no) {
 		action : '<c:url value="/boardList.do"/>',
 		target : '_self'
 	}).submit();
-};
+}
+
+function fn_detail(no){
+	//var  formData= $('#boardForm').serialize();
+	$('#boardForm #no').attr('disabled',false);
+	$('#boardForm #no').val(no);
+	
+	$('#boardForm').attr({
+		action : '<c:url value="/boardDetail.do" />',
+		target : '_self'
+	}).submit();
+
+}
 
 function fn_btn(no){
 	var  formData= $('#boardForm').serialize();

@@ -38,6 +38,7 @@
 			<form id="boardForm" method="post">
 			<input type="hidden" id="no" name="no">
 			<input type="hidden" id="currentPageNo" name="currentPageNo" value="${pg.currentPageNo}"/>
+			<input type="hidden" id="recordCountPerPage" name="recordCountPerPage" value="${pg.recordCountPerPage}"/>
 				<!-- Page Heading/Breadcrumbs-->
 				<h1 class="mt-4 mb-3">
 					Board <small>board</small>
@@ -109,7 +110,7 @@
 						<c:forEach var="result" items="${list}" varStatus="status">
 							<tr>
 								<th scope="row">${result.no}</th>
-								<td><a href="#" onclick="fn_detail(${result.no});">${result.title}</a></td>
+								<td><a href="#" onclick="fn_detail('${result.no}');">${result.title}</a></td>
 								<td>${result.id}</td>
 								<td>${result.input_dt}</td>
 								<td>${result.cnt}</td>

@@ -73,15 +73,15 @@
 		resultType="map">
 		select 
 		<!-- (SELECT COALESCE(MAX(no),0)+1 FROM board) no -->
-		no
-		,id
-		,title
-		,content
-		,cnt
-		,input_dt
-		,updt_dt
-		from board
-		where no=#{no,jdbcType=VARCHAR}
+		B.no
+		,B.id
+		,B.title
+		,B.content
+		,B.cnt
+		,B.input_dt
+		,B.updt_dt
+		from board B
+		where B.no=#{no,jdbcType=VARCHAR}
 
 	</select>
 	
@@ -165,4 +165,15 @@
 		,cnt
 		from board where no=#{no, jdbcType=VARCHAR}
 	</insert>
+	
+	<!-- 게시판 목록 -->
+	<select id="selectContent" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+ 	SELECT 
+ 		B.TITLE
+ 		,B.no
+		FROM board B
+		WHERE B.no=#{contentNo}
+		ORDER BY B.no
+	</select>
 </mapper>
