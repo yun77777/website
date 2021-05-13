@@ -109,7 +109,7 @@
 					<tbody>
 						<c:forEach var="result" items="${list}" varStatus="status">
 							<tr>
-								<th scope="row">${result.no}</th>
+								<th scope="row">${result.B_NO}</th>
 								<td><a href="#" onclick="fn_detail('${result.no}');">${result.title}</a></td>
 								<td>${result.id}</td>
 								<td>${result.input_dt}</td>

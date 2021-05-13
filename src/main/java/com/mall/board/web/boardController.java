@@ -83,23 +83,27 @@ public class boardController {
 			Map<String,Object> detail=boardService.selectBoardDetail(paramMap);
 			System.err.println("detailP");
 			System.err.println(paramMap);
-			int no=Integer.parseInt(paramMap.get("no").toString());
-			System.err.println("no:"+no);
+//			int no=Integer.parseInt(paramMap.get("no").toString());
+//			System.err.println("no:"+no);
+//			
+//			//rownum
+//			paramMap.put("contentNo",no-1);
+//			Map<String,Object> beforeContent=boardService.selectContent(paramMap);
+//			paramMap.put("contentNo",no+1);
+//			Map<String,Object> afterContent=boardService.selectContent(paramMap);
 			
-			//rownum
-			paramMap.put("contentNo",no-1);
-			Map<String,Object> beforeContent=boardService.selectContent(paramMap);
-			paramMap.put("contentNo",no+1);
-			Map<String,Object> afterContent=boardService.selectContent(paramMap);
 			
-			System.err.println("before@@@");
-			System.err.println(beforeContent);
-			System.err.println("after@@@");
-			System.err.println(afterContent);
+			List<Map<String,Object>> list=boardService.selectBoardHisList(paramMap);
+
+//			System.err.println("before@@@");
+//			System.err.println(beforeContent);
+//			System.err.println("after@@@");
+//			System.err.println(afterContent);
 			
 			model.addAttribute("detail",detail);
-			model.addAttribute("beforeContent",beforeContent);
-			model.addAttribute("afterContent",afterContent);
+			model.addAttribute("list",list);
+//			model.addAttribute("beforeContent",beforeContent);
+//			model.addAttribute("afterContent",afterContent);
 			System.err.println("detaiL@@@@@@@");
 		} catch (Exception e) {
 			e.printStackTrace();

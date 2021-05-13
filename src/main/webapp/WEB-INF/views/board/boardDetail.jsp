@@ -86,6 +86,21 @@
 									</tr>
 								</tbody>
 							</table>
+							
+			                <table class="table table-sm">
+								<tbody>
+								<c:forEach var="result" items="${list}" varStatus="status">
+									<tr>
+										<th scope="row">before</th>
+										<td><a href="#" onclick="fn_detail('${result.B_NO}');">${result.TITLE}</a></td>
+									</tr>
+								</c:forEach>
+									<tr>
+										<th scope="row">after</th>
+										<td><a href="#" onclick="fn_detail('${list}');">${afterContent.TITLE}</a></td>
+									</tr>
+								</tbody>
+							</table>
                         </form>
                     </div>
                 </div>
