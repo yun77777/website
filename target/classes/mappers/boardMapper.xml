@@ -36,7 +36,8 @@
 	<select id="selectBoardList" parameterType="java.util.HashMap"
 		resultType="java.util.HashMap">
 	<include refid="com.mall.common.commonMapper.pagingHeaderSql"/>
- 	SELECT B.no
+ 	SELECT @rownum:=@rownum+1 ROWNUM
+ 	,B.no
 		,B.id
 		,B.title
 		,B.content
@@ -44,7 +45,7 @@
 		<!-- ,(SELECT date_format(input_dt,'%Y-%m-%d') FROM board WHERE no=B.no) input_dt
 		,(SELECT date_format(input_dt,'%H:%m:%s') FROM board WHERE no=B.no) input_h -->
         ,IF(date_format(NOW(),'%Y-%m-%d')=date_format(input_dt,'%Y-%m-%d'),(SELECT date_format(input_dt,'%H:%m:%s') FROM board WHERE no=B.no),(SELECT date_format(input_dt,'%Y-%m-%d') FROM board WHERE no=B.no)) input_dt
-		FROM board B
+		FROM board B,(SELECT @rownum:=0) R
 		where B.no>0
 		<include refid="searchOption"/>
 		ORDER BY B.no DESC
@@ -176,4 +177,13 @@
 		WHERE B.no=#{contentNo}
 		ORDER BY B.no
 	</select>
+	
+	
+	<!-- 이력 업데이트 -->
+	<update id="updateHis" parameterType="map">
+		u<!-- pdate board_h
+		set DEL_YN=#{DEL_YN,jdbcType=VARCHAR}
+		where no=#{no,jdbcType=VARCHAR} -->
+	</update>
+	
 </mapper>

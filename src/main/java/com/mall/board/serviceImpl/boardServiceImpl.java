@@ -51,6 +51,8 @@ public class boardServiceImpl implements boardService{
 	public void deleteBoard(Map<String, Object> paramMap, MultipartHttpServletRequest multi,
 			HttpServletRequest request) throws Exception {
 		boardMapper.deleteBoard(paramMap);
+		paramMap.put("DEL_YN","Y");
+		boardMapper.insertHisBoard(paramMap);
 	}
 
 }

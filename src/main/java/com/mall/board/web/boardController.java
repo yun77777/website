@@ -86,6 +86,7 @@ public class boardController {
 			int no=Integer.parseInt(paramMap.get("no").toString());
 			System.err.println("no:"+no);
 			
+			//rownum
 			paramMap.put("contentNo",no-1);
 			Map<String,Object> beforeContent=boardService.selectContent(paramMap);
 			paramMap.put("contentNo",no+1);
