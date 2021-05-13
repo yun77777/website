@@ -94,7 +94,7 @@
 	
 	<insert id="insertBoard" parameterType="map">
 	<selectKey resultType="int" keyProperty="no" order="BEFORE">
-		SELECT COALESCE(MAX(B_NO),0)+1 AS no FROM board
+		SELECT COALESCE(MAX(B_NO),0)+1 AS B_NO FROM board
 	</selectKey>
 		insert board(
 		B_NO
@@ -103,7 +103,7 @@
 		,content
 		,input_dt
 		) values(
-		#{no}
+		#{B_NO}
 		,#{id,jdbcType=VARCHAR}
 		,#{title,jdbcType=VARCHAR}
 		,#{content,jdbcType=VARCHAR}
@@ -146,7 +146,7 @@
 	</selectKey>
 		insert into board_h(
 		HIS_ID
-		,noB_NO
+		,B_NO
 		,id
 		,title
 		,content
@@ -163,7 +163,7 @@
 		,input_dt
 		,updt_dt
 		,cnt
-		from board where no=#{no, jdbcType=VARCHAR}
+		from board where B_NO=#{no, jdbcType=VARCHAR}
 	</insert>
 	
 	<!-- 게시판 목록 -->
