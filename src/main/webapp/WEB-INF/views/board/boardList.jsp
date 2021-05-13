@@ -110,7 +110,7 @@
 						<c:forEach var="result" items="${list}" varStatus="status">
 							<tr>
 								<th scope="row">${result.B_NO}</th>
-								<td><a href="#" onclick="fn_detail('${result.no}');">${result.title}</a></td>
+								<td><a href="#" onclick="fn_detail('${result.B_NO}');">${result.title}</a></td>
 								<td>${result.id}</td>
 								<td>${result.input_dt}</td>
 								<td>${result.cnt}</td>

@@ -46,7 +46,7 @@
                             <div class="control-group form-group">
                                 <div class="controls">
                                     <label>no:</label>
-                                    <input class="form-control" id="no" name="no" type="text" value="${detail.no}" disabled data-validation-required-message="Please enter your name." />
+                                    <input class="form-control" id="no" name="no" type="text" value="${detail.B_NO}" disabled data-validation-required-message="Please enter your name." />
                                     <p class="help-block"></p>
                                 </div>
                             </div>
@@ -78,26 +78,11 @@
 								<tbody>
 									<tr>
 										<th scope="row">before</th>
-										<td><a href="#" onclick="fn_detail(${beforeContent.no});">${beforeContent.TITLE}</a></td>
+										<td><a href="#" onclick="fn_detail('${list[0].B_NO}');">${list[0].TITLE}</a></td>
 									</tr>
 									<tr>
 										<th scope="row">after</th>
-										<td><a href="#" onclick="fn_detail(${afterContent.no});">${afterContent.TITLE}</a></td>
-									</tr>
-								</tbody>
-							</table>
-							
-			                <table class="table table-sm">
-								<tbody>
-								<c:forEach var="result" items="${list}" varStatus="status">
-									<tr>
-										<th scope="row">before</th>
-										<td><a href="#" onclick="fn_detail('${result.B_NO}');">${result.TITLE}</a></td>
-									</tr>
-								</c:forEach>
-									<tr>
-										<th scope="row">after</th>
-										<td><a href="#" onclick="fn_detail('${list}');">${afterContent.TITLE}</a></td>
+										<td><a href="#" onclick="fn_detail('${list[1].B_NO}';">${list[1].TITLE}</a></td>
 									</tr>
 								</tbody>
 							</table>
