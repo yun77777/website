@@ -63,7 +63,7 @@
 									data-validation-required-message="Please enter your email address." />
 							</div>
 						</div>
-						<div class="control-group form-group">
+						<%-- <div class="control-group form-group">
 							<div class="controls">
 								<label>content:</label>
 								<textarea class="form-control" name="content" id="content" rows="10" cols="100"
@@ -71,11 +71,16 @@
 									data-validation-required-message="Please enter your message"
 									maxlength="999" style="resize: none">${detail.content}</textarea>
 							</div>
-						</div>
+						</div> --%>
+						
+						<!-- SmartEditor2  -->
+						<%@ include file="/WEB-INF/views/common/smartEditor.jsp"%>
+						
 						<div id="success"></div>
 						<!-- For success/fail messages-->
                         <button class="btn btn-primary" id="sendMessageButton" onclick="fn_list()" type="button">Go to the list</button>
-						<button class="btn btn-primary" onclick="fn_insert()" type="button">submit</button>
+						<button class="btn btn-primary" onclick="" id="submit" type="button">submit</button>
+<!-- 						<button class="btn btn-primary" onclick="fn_insert()" id="submit" type="button">submit</button> -->
 					</div>
 				</div>
 			</form>
@@ -89,6 +94,7 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Core theme JS-->
 	<script src="<c:url value='/resources/js/scripts.js'/>"></script>
+	
 </body>
 
 <script>
@@ -124,6 +130,60 @@ function fn_insert() {
 	});
 
 }
+var oEditors = [];
+nhn.husky.EZCreator.createInIFrame({
+	oAppRef : oEditors,
+	elPlaceHolder : "content", //저는 textarea의 id와 똑같이 적어줬습니다.
+	sSkinURI : "se2/SmartEditor2Skin.html", //경로를 꼭 맞춰주세요!
+	fCreator : "createSEditor2",
+	htParams : {
+		// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+		bUseToolbar : true,
+
+		// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+		bUseVerticalResizer : false,
+
+		// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+		bUseModeChanger : false
+	}
+});
+
+$(function() {
+	$("#submit").click(function() {
+		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []); 
+		//textarea의 id를 적어줍니다.
+
+		var selcatd = $("#selcatd > option:selected").val();
+		var title = $("#title").val();
+		var content = document.getElementById("content").value;;
+
+		if (selcatd == "") {
+			alert("카테고리를 선택해주세요.");
+			return;
+		}
+		if (title == null || title == "") {
+			alert("제목을 입력해주세요.");
+			$("#title").focus();
+			return;
+		}
+		if(content == "" || content == null || content == '&nbsp;' || 
+				content == '<br>' || content == '<br/>' || content == '<p>&nbsp;</p>'){
+			alert("본문을 작성해주세요.");
+			oEditors.getById["content"].exec("FOCUS"); //포커싱
+			return;
+		} //이 부분은 스마트에디터 유효성 검사 부분이니 참고하시길 바랍니다.
+		
+		var result = confirm("작성하시겠습니까?");
+		
+		if(result){
+			alert("작성 완료!");
+			//$("#boardForm").submit();
+			fn_insert();
+		}else{
+			return;
+		}
+	});
+})
 </script>
 
 </html>
