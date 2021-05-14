@@ -14,7 +14,7 @@
 <title>KIVIEW &mdash; 글쓰기</title>
 
 <!-- css -->
-<link rel="stylesheet" href="<c:url value='/resources/css/notice_write.css'/>">
+<%-- <link rel="stylesheet" href="<c:url value='/resources/se2/css/notice_write.css'/>"> --%>
 <%-- <jsp:include page="<c:url value='/WEB-INF/board/boardInsert.jsp'/>">
  --%>
 
@@ -22,8 +22,8 @@
 
 <!-- SmartEditor2 라이브러리  --> content:
 <script type="text/javascript" src="<c:url value='/se2/js/HuskyEZCreator.js'/>" charset="utf-8"></script>
-<script type="text/javascript" src="http//code.jquery.com/jquery-1.11.0.min.js"></script>
-
+<!-- <script type="text/javascript" src="http//code.jquery.com/jquery-1.11.0.min.js"></script>
+ -->
 </head>
 <body>
 
@@ -36,7 +36,7 @@
 		</div>
 	</div>
 </div>
-
+ 
 
 </body>
 </html>
