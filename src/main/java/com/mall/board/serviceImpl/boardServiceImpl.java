@@ -34,6 +34,12 @@ public class boardServiceImpl implements boardService {
 	public Integer selectBoardListCnt(Map<String, Object> paramMap) throws Exception {
 		return boardMapper.selectBoardListCnt(paramMap);
 	}
+	
+	public Integer memberLogin(Map<String, Object> paramMap) throws Exception {
+		System.err.println("login@:"+paramMap);
+		System.err.println(boardMapper.memberLogin(paramMap));
+		return boardMapper.memberLogin(paramMap);
+	}
 
 	public Integer selectBoardMaxNo(Map<String, Object> paramMap) throws Exception {
 		return boardMapper.selectBoardMaxNo(paramMap);
@@ -48,9 +54,19 @@ public class boardServiceImpl implements boardService {
 	@Override
 	public void insertBoard(Map<String, Object> paramMap, MultipartHttpServletRequest multi, HttpServletRequest request)
 			throws Exception {
+		System.err.println("$$$$$$$$$:"+paramMap);
 		boardMapper.mergeBoard(paramMap);
 		boardMapper.insertHisBoard(paramMap);
 	}
+	
+	@Override
+	public void insertMember(Map<String, Object> paramMap, MultipartHttpServletRequest multi, HttpServletRequest request)
+			throws Exception {
+		System.err.println("$$$$$$$$$:"+paramMap);
+		boardMapper.insertMember(paramMap);
+		boardMapper.insertMemberHis(paramMap);
+	}
+	
 
 	@Override
 	public void deleteBoard(Map<String, Object> paramMap, MultipartHttpServletRequest multi, HttpServletRequest request)

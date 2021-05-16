@@ -127,7 +127,9 @@ public class boardController {
 	@RequestMapping(value = "/insertBoard.do")
 	public Map<String,Object> insertBoard(
 			MultipartHttpServletRequest multi, @RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
-		
+		System.err.println("@@@@@@@@@@@@@@@@@@@");
+		System.err.println(paramMap.get("content"));
+		System.err.println("@@@@@@@@@@@@@@@@@@@");
 		try {
 			if(paramMap.get("no").toString()!=null||!paramMap.get("no").toString().trim().equals(""))
 				paramMap.put("no",paramMap.get("no"));
@@ -152,4 +154,65 @@ public class boardController {
 		}		
 		return paramMap;
 	}
+	
+//	@RequestMapping(value = "/signIn.do")
+//	public String signIn( @RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
+//		System.err.println("searchList@@@");
+//		System.err.println(paramMap);
+//		
+//		try {
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//	return "signIn";
+//	}
+//	
+//	//memberLogin
+//	
+//	@ResponseBody
+//	@RequestMapping(value = "/memberLogin.do")
+//	public Map<String,Object> memberLogin(
+//			MultipartHttpServletRequest multi, @RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
+//		try {
+//			System.err.println("ff:"+paramMap);
+//			if(boardService.memberLogin(paramMap)==1)
+//				paramMap.put("result","success");
+//			else
+//				paramMap.put("result","fail");
+//				
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}		
+//		return paramMap;
+//	}
+//	
+//	
+//	@RequestMapping(value = "/signUp.do")
+//	public String signUp( @RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
+//		System.err.println("searchList@@@");
+//		System.err.println(paramMap);
+//		
+//		try {
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//	return "signUp";
+//	}
+//	
+//	@ResponseBody
+//	@RequestMapping(value = "/insertMember.do")
+//	public Map<String,Object> insertMember(
+//			MultipartHttpServletRequest multi, @RequestParam Map<String, Object> paramMap, HttpSession session, HttpServletRequest request, Model model) throws Exception {
+//		try {
+//			boardService.insertMember(paramMap, multi, request);
+//			model.addAttribute("paramMap", paramMap);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}		
+//		return paramMap;
+//	}
 }

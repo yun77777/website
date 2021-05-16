@@ -21,6 +21,8 @@
 <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"
 	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="<c:url value='/se2/js/HuskyEZCreator.js'/>" charset="utf-8"></script>
+
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="<c:url value='/resources/css/styles.css'/>" rel="stylesheet" />
 </head>
@@ -64,14 +66,15 @@
                             </div>
                             <div class="control-group form-group">
                                 <div class="controls">
-                                    <label>content:</label>
-                                    <textarea class="form-control" id="content" name="content" rows="10" cols="100" required data-validation-required-message="Please enter your message" maxlength="999" style="resize: none">${detail.content}</textarea>
+                         						<%@ include file="/WEB-INF/views/common/smartEditor.jsp"%>
                                 </div>
+                                
+                                
                             </div>
                             <div id="success"></div>
                             
                             <!-- For success/fail messages-->
-                        	<button class="btn btn-primary" id="sendMessageButton" onclick="fn_insert()" type="button">Save</button>
+                        	<button class="btn btn-primary" id="submit" onclick="" type="button">Save</button>
 			                <button class="btn btn-primary" id="sendMessageButton" onclick="fn_delete()" type="button">Delete</button>
 			                
 			                <table class="table table-sm">
@@ -105,12 +108,13 @@
 <script>
 function fn_list(no) {
 	//$('#currentPageNo').val(no);
-
-	$('#boardForm').attr({
+	window.location='<c:url value="/boardList.do"/>';
+	
+	/* $('#boardForm').attr({
 		action : '<c:url value="/boardList.do"/>',
 		target : '_self'
-	}).submit();
-}
+	}).submit(); */
+};
 
 function fn_detail(no){
 	//var  formData= $('#boardForm').serialize();
@@ -184,6 +188,62 @@ function fn_delete() {
 		}
 	});
 }
+var oEditors = [];
+nhn.husky.EZCreator.createInIFrame({
+	oAppRef : oEditors,
+	elPlaceHolder : "content", //저는 textarea의 id와 똑같이 적어줬습니다.
+	sSkinURI : "se2/SmartEditor2Skin.html", //경로를 꼭 맞춰주세요!
+	fCreator : "createSEditor2",
+	htParams : {
+		// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+		bUseToolbar : true,
+
+		// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+		bUseVerticalResizer : false,
+
+		// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+		bUseModeChanger : false
+	}
+});
+
+$(function() {
+	$("#submit").click(function() {
+		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []); 
+		//textarea의 id를 적어줍니다.
+
+		var selcatd = $("#selcatd > option:selected").val();
+		var title = $("#title").val();
+		var content = document.getElementById("content").value;
+		alert(content);
+		if (selcatd == "") {
+			alert("카테고리를 선택해주세요.");
+			return;
+		}
+		if (title == null || title == "") {
+			alert("제목을 입력해주세요.");
+			$("#title").focus();
+			return;
+		}
+		if(content == "" || content == null || content == '&nbsp;' || 
+				content == '<br>' || content == '<br/>' || content == '<p>&nbsp;</p>'){
+			alert("본문을 작성해주세요.");
+			oEditors.getById["content"].exec("FOCUS"); //포커싱
+			return;
+		} //이 부분은 스마트에디터 유효성 검사 부분이니 참고하시길 바랍니다.
+		
+		var result = confirm("작성하시겠습니까?");
+		
+		if(result){
+			alert("작성 완료!");
+/* 			$("#boardForm").submit();
+ */			fn_insert();
+		}else{
+			return;
+		}
+	});
+})
+
+</script>
 </script>
 
 </html>

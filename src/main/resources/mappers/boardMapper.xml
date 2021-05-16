@@ -198,4 +198,6 @@
 		    (SELECT B_NO FROM board WHERE B_NO <![CDATA[>]]> #{no} ORDER BY B_NO LIMIT 1)
 		   )
 	</select>
+	
+	
 </mapper>

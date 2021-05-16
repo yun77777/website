@@ -21,7 +21,6 @@
 <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"
 	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="<c:url value='/se2/js/HuskyEZCreator.js'/>" charset="utf-8"></script>
 
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="<c:url value='/resources/css/styles.css'/>" rel="stylesheet" />
@@ -36,7 +35,7 @@
 
 				<!-- Page Heading/Breadcrumbs-->
 				<h1>
-					Board <small>insert</small>
+					Member <small>registration</small>
 				</h1>
 				<!-- Content Row-->
 				<!-- Contact Form-->
@@ -45,43 +44,74 @@
 					<div class="col-lg-8 mb-4">
 						<div class="control-group form-group">
 							<div class="controls">
-								<label>no:</label> <input class="form-control" id="no"
-									name="no" type="text" value="${paramMap.no}" disabled
-									data-validation-required-message="Please enter your name." />
-								<p class="help-block"></p>
-							</div>
-						</div>
-						<div class="control-group form-group">
-							<div class="controls">
 								<label>id:</label> <input class="form-control" id="id"
-									name="id" type="text" value="${detail.id}" required
+									name="ID" type="text" required
 									data-validation-required-message="Please enter your phone number." />
+								<button type="button" onclick="fn_dp_chk()">duplication check</button>
 							</div>
 						</div>
 						<div class="control-group form-group">
 							<div class="controls">
-								<label>title:</label> <input class="form-control" id="title"
-									name="title" type="text" value="${detail.title}" required
+								<label>password:</label> <input class="form-control" id="pw"
+									name="PW" type="text" required
+									data-validation-required-message="Please enter your email address." />
+							</div>
+							<div class="controls">
+								<label>password check:</label> <input class="form-control" id="pwChk"
+									name="pwChk" type="text" required
 									data-validation-required-message="Please enter your email address." />
 							</div>
 						</div>
-						<%-- <div class="control-group form-group">
+						<div class="control-group form-group">
 							<div class="controls">
-								<label>content:</label>
-								<textarea class="form-control" name="content" id="content" rows="10" cols="100"
-									required
-									data-validation-required-message="Please enter your message"
-									maxlength="999" style="resize: none">${detail.content}</textarea>
+								<label>name:</label> <input class="form-control" id="name"
+									name="NAME" type="text" required
+									data-validation-required-message="Please enter your email address." />
 							</div>
-						</div> --%>
-						
-						<!-- SmartEditor2  -->
-						<%@ include file="/WEB-INF/views/common/smartEditor.jsp"%>
-						
+						</div>
+						<div class="control-group form-group">
+							<div class="controls">
+								<label>address:</label> 
+								<input type="hidden" id="wholeAddress" name="ADDRESS">
+								<input class="form-control" id="postalCode"
+									name="postalCode" type="text" required
+									data-validation-required-message="Please enter your email address." />
+									<button type="button" onclick="fn_dp_chk()">postal code check</button>
+								<input class="form-control" id="address"
+									name="address" type="text" required
+									data-validation-required-message="Please enter your email address." />
+								<input class="form-control" id="addressDetail"
+									name="addressDetail" type="text" required
+									data-validation-required-message="Please enter your email address." />
+							</div>
+						</div>
+						<div class="control-group form-group">
+							<div class="controls">
+								<label>contact:</label> 
+								<input class="form-control" id="contact"
+									name="CONTACT" type="text" required
+									data-validation-required-message="Please enter your email address." />
+							</div>
+						</div>
+						<div class="control-group form-group">
+							<div class="controls">
+								<label>phone:</label> <input class="form-control" id="phone"
+									name="PHONE" type="text" required
+									data-validation-required-message="Please enter your email address." />
+							</div>
+						</div>
+						<div class="control-group form-group">
+							<div class="controls">
+								<label>email:</label> <input class="form-control" id="email"
+									name="EMAIL" type="text" required
+									data-validation-required-message="Please enter your email address." />
+							</div>
+						</div>
 						<div id="success"></div>
 						<!-- For success/fail messages-->
                         <button class="btn btn-primary" id="sendMessageButton" onclick="fn_list()" type="button">Go to the list</button>
-						<button class="btn btn-primary" onclick="" id="submit" type="button">submit</button>
+						<button class="btn btn-primary" id="sendMessageButton" onclick="fn_sign_up()" type="button">SignUp</button>
+						
 <!-- 						<button class="btn btn-primary" onclick="fn_insert()" id="submit" type="button">submit</button> -->
 					</div>
 				</div>
@@ -102,7 +132,7 @@
 <script>
 function fn_list(no) {
 	//$('#currentPageNo').val(no);
-	window.location='<c:url value="/boardList.do"/>';
+	window.location='<c:url value="/signIn.do"/>';
 	
 	/* $('#boardForm').attr({
 		action : '<c:url value="/boardList.do"/>',
@@ -110,13 +140,15 @@ function fn_list(no) {
 	}).submit(); */
 };
 
-function fn_insert() {
+function fn_sign_up() {
 	//var formData = $('#boardForm').serialize();
-	$('#boardForm #no').attr('disabled',false);
+	var wholeAddress=$("#postalCode").val()+', '+$("#address").val()+', '+$("#addressDetail").val();
+	$("#wholeAddress").val(wholeAddress);
 	var formData = new FormData($("#boardForm")[0]);
-	alert($("#boardForm #content").val());
+
+	alert(wholeAddress);
 	$.ajax({
-		url : "${pageContext.request.contextPath}/insertBoard.do",
+		url : "${pageContext.request.contextPath}/insertMember.do",
 		type : "post",
 		enctype: 'multipart/form-data',
 		data : formData,
@@ -134,60 +166,6 @@ function fn_insert() {
 
 }
 
-var oEditors = [];
-nhn.husky.EZCreator.createInIFrame({
-	oAppRef : oEditors,
-	elPlaceHolder : "content", //저는 textarea의 id와 똑같이 적어줬습니다.
-	sSkinURI : "se2/SmartEditor2Skin.html", //경로를 꼭 맞춰주세요!
-	fCreator : "createSEditor2",
-	htParams : {
-		// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-		bUseToolbar : true,
-
-		// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-		bUseVerticalResizer : false,
-
-		// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-		bUseModeChanger : false
-	}
-});
-
-$(function() {
-	$("#submit").click(function() {
-		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []); 
-		//textarea의 id를 적어줍니다.
-
-		var selcatd = $("#selcatd > option:selected").val();
-		var title = $("#title").val();
-		var content = document.getElementById("content").value;
-		
-		if (selcatd == "") {
-			alert("카테고리를 선택해주세요.");
-			return;
-		}
-		if (title == null || title == "") {
-			alert("제목을 입력해주세요.");
-			$("#title").focus();
-			return;
-		}
-		if(content == "" || content == null || content == '&nbsp;' || 
-				content == '<br>' || content == '<br/>' || content == '<p>&nbsp;</p>'){
-			alert("본문을 작성해주세요.");
-			oEditors.getById["content"].exec("FOCUS"); //포커싱
-			return;
-		} //이 부분은 스마트에디터 유효성 검사 부분이니 참고하시길 바랍니다.
-		
-		var result = confirm("작성하시겠습니까?");
-		
-		if(result){
-			alert("작성 완료!");
-/* 			$("#boardForm").submit();
- */			fn_insert();
-		}else{
-			return;
-		}
-	});
-})
 </script>
 
 </html>

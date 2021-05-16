@@ -16,11 +16,15 @@ public interface boardMapper {
 
 	public Integer selectBoardListCnt(Map<String, Object> paramMap) throws Exception;
 
+	public Integer memberLogin(Map<String, Object> paramMap) throws Exception;
+
 	public Integer selectBoardMaxNo(Map<String, Object> paramMap) throws Exception;
 
 	public Map<String, Object> selectBoardDetail(Map<String, Object> paramMap) throws Exception;
 
 	public void insertBoard(Map<String, Object> paramMap) throws Exception;
+
+	public void insertMember(Map<String, Object> paramMap) throws Exception;
 
 	public void deleteBoard(Map<String, Object> paramMap) throws Exception;
 
@@ -30,5 +34,7 @@ public interface boardMapper {
 
 	// history
 	public void insertHisBoard(Map<String, Object> paramMap) throws Exception;
+
+	public void insertMemberHis(Map<String, Object> paramMap) throws Exception;
 
 }
