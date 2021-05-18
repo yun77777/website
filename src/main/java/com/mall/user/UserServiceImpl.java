@@ -39,7 +39,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserVO login(Map<String, Object> paramMap) throws Exception {
+	public Map<String, Object> login(Map<String, Object> paramMap) throws Exception {
+		System.err.println("f");
+		System.err.println(paramMap.get("ID"));
+		System.err.println(userMapper.login(paramMap));
 		return userMapper.login(paramMap);
 
 	}

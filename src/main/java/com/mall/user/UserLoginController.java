@@ -27,8 +27,8 @@ import com.mall.login.service.loginService;
 @Controller
 @RequestMapping("/user")
 public class UserLoginController {
-
-    private final UserService userService;
+	@Resource(name = "UserService")
+    private  UserService userService;
 
     @Inject
     public UserLoginController(UserService userService) {
@@ -45,12 +45,22 @@ public class UserLoginController {
     // 로그인 처리
     @RequestMapping(value = "/loginPost.do", method = RequestMethod.POST)
     public void loginPOST(Map<String,Object> paramMap, LoginDTO loginDTO, HttpSession httpSession, Model model) throws Exception {
+    	System.err.println("log:");
+    	System.err.println(loginDTO.getID());
+    	System.err.println(loginDTO.getPW());
+    	paramMap.put("ID",loginDTO.getID());
+    	paramMap.put("PW",loginDTO.getPW());
+    	Map<String, Object> userVO = userService.login(paramMap);
 
-        UserVO userVO = userService.login(paramMap);
-
-        if (userVO == null || !BCrypt.checkpw(loginDTO.getPW(), userVO.getID())) {
-            return;
-        }
+       
+        
+        try {
+        	 if (userVO == null || !BCrypt.checkpw(loginDTO.getPW(), userVO.get("ID").toString())) {
+                 return;
+             }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 
         model.addAttribute("user", userVO);
         

@@ -15,7 +15,7 @@
 		)
     </insert>
     
-    <select id="login">
+    <select id="login" resultType="map">
     SELECT
       *
     FROM member

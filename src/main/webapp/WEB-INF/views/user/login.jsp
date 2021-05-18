@@ -1,6 +1,30 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+<%@ page session="false"%>
 <!DOCTYPE html>
 <html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Modern Business - Start Bootstrap Template</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="<c:url value='/resources/css/styles.css'/>" rel="stylesheet" />
+</head>
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
@@ -11,14 +35,13 @@
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">로그인 페이지</p>
-
-        <form action="${path}/user/loginPost" method="post">
+ 		<form id="loginForm" method="post" enctype="multipart/form-data">
             <div class="form-group has-feedback">
-                <input type="text" name="userId" class="form-control" placeholder="아아디">
+                <input type="text" id="id" name="ID" class="form-control" placeholder="아아디">
                 <span class="glyphicon glyphicon-exclamation-sign form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="password" name="userPw" class="form-control" placeholder="비밀번호">
+                <input type="password" id="pw" name="PW" class="form-control" placeholder="비밀번호">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="row">
@@ -31,13 +54,12 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">
+                    <button type="submit" onclick="fn_sign_in()" class="btn btn-primary btn-block btn-flat">
                         <i class="fa fa-sign-in"></i> 로그인
                     </button>
                 </div>
                 <!-- /.col -->
             </div>
-        </form>
 
         <div class="social-auth-links text-center">
             <p>- 또는 -</p>
@@ -52,11 +74,20 @@
 
         <a href="#">비밀번호 찾기</a><br>
         <a href="${path}/user/register" class="text-center">회원가입</a>
-
+	</form>
     </div>
     <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->
+
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Core theme JS-->
+	<script src="<c:url value='/resources/js/scripts.js'/>"></script>
+	
+</body>
+
 
 <script>
 
@@ -74,6 +105,17 @@
             increaseArea: '20%' // optional
         });
     });
+    
+    function fn_sign_in() {
+    	//var formData = $('#boardForm').serialize();
+    	alert('f');
+    	alert($("#id").val());
+    	$('#loginForm').attr({
+    		action : '<c:url value="/user/loginPost.do"/>',
+    		target : '_self'
+    	}).submit();
+    }
+
+    
 </script>
-</body>
 </html>
