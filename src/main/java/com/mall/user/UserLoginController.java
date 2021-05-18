@@ -28,42 +28,48 @@ import com.mall.login.service.loginService;
 @RequestMapping("/user")
 public class UserLoginController {
 	@Resource(name = "UserService")
-    private  UserService userService;
+	private UserService userService;
 
-    @Inject
-    public UserLoginController(UserService userService) {
-        this.userService = userService;
-    }
+	@Inject
+	public UserLoginController(UserService userService) {
+		this.userService = userService;
+	}
 
-    // 로그인 페이지
-    @RequestMapping(value = "/login.do", method = RequestMethod.GET)
-    public String loginGET(Map<String,Object> paramMap, @ModelAttribute("loginDTO") LoginDTO loginDTO) {
-        System.err.println("@@@@@@@@login");
-    	return "/user/login";
-    }
+	// 로그인 페이지
+	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
+	public String loginGET(Map<String, Object> paramMap, @ModelAttribute("loginDTO") LoginDTO loginDTO) {
+		System.err.println("@@@@@@@@login");
+		return "/user/login";
+	}
 
-    // 로그인 처리
-    @RequestMapping(value = "/loginPost.do", method = RequestMethod.POST)
-    public void loginPOST(Map<String,Object> paramMap, LoginDTO loginDTO, HttpSession httpSession, Model model) throws Exception {
-    	System.err.println("log:");
-    	System.err.println(loginDTO.getID());
-    	System.err.println(loginDTO.getPW());
-    	paramMap.put("ID",loginDTO.getID());
-    	paramMap.put("PW",loginDTO.getPW());
-    	Map<String, Object> userVO = userService.login(paramMap);
+	// 로그인 처리
+	@RequestMapping(value = "/loginPost.do", method = RequestMethod.POST)
+	public void loginPOST(Map<String, Object> paramMap, LoginDTO loginDTO, HttpSession httpSession, Model model)
+			throws Exception {
+		System.err.println("log:");
+		System.err.println(loginDTO.getID());
+		System.err.println(loginDTO.getPW());
+		paramMap.put("ID", loginDTO.getID());
+		paramMap.put("PW", loginDTO.getPW());
 
-       
-        
-        try {
-        	 if (userVO == null || !BCrypt.checkpw(loginDTO.getPW(), userVO.get("ID").toString())) {
-                 return;
-             }
+		try {
+
+			if (userService.login(loginDTO) != null) {
+//            	if (userVO == null || !BCrypt.checkpw(loginDTO.getPW(), userVO.get("PW").toString())) {
+
+				Map<String, Object> userVO = userService.login(loginDTO);
+				System.err.println("$$$$$$$$$$");
+				System.err.println(loginDTO.getPW());
+				System.err.println(userVO.get("PW"));
+				System.err.println("$$$$$$$$$$");
+				model.addAttribute("user", userVO);
+
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}	
+		}
 
-        model.addAttribute("user", userVO);
-        
-    }
-    
+	}
+
 }
