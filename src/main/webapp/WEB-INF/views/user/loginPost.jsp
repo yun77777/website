@@ -5,11 +5,14 @@
 </head>
 <body>
     <script>
-    if('${user}'==null){
+    var id='${id}';
+    var length=id.length;
+    if(id==null||length==0){
     	alert("아이디와 비밀번호를 확인해주세요.");
         self.location = "/user/login.do";
     }else{
-    	alert("successfully login")
+    	alert("successfully login");
+        self.location = "/user/afterLogin.do";
     }
         
     </script>

@@ -58,11 +58,11 @@ public class UserLoginController {
 //            	if (userVO == null || !BCrypt.checkpw(loginDTO.getPW(), userVO.get("PW").toString())) {
 
 				Map<String, Object> userVO = userService.login(loginDTO);
-				System.err.println("$$$$$$$$$$");
-				System.err.println(loginDTO.getPW());
-				System.err.println(userVO.get("PW"));
+				System.err.println("$$$$$$$$$$userVO");
+				System.err.println(userVO);
 				System.err.println("$$$$$$$$$$");
 				model.addAttribute("user", userVO);
+				model.addAttribute("id", userVO.get("ID"));
 
 			}
 
@@ -71,5 +71,11 @@ public class UserLoginController {
 		}
 
 	}
+	
+	// 로그인 페이지
+		@RequestMapping(value = "/afterLogin.do", method = RequestMethod.GET)
+		public String loginGETAfter(Map<String, Object> paramMap, @ModelAttribute("loginDTO") LoginDTO loginDTO) {
+			return "/user/afterLogin";
+		}
 
 }
